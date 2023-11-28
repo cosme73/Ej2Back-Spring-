@@ -33,18 +33,18 @@ public class StudentController {
         return ycqtstudentServices.listAllStudents().stream().map(ycqtx->{
             ModelMapper ycqtmodelMapper = new ModelMapper();
             return ycqtmodelMapper.map(ycqtx, StudentDTO.class);
-        }).collect(java.util.stream.Collectors.toList());
+        }).collect(Collectors.toList());
 
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public void update(@RequestBody StudentDTO ycqtDTO, @PathVariable("id") Long ycqtid) {
         ModelMapper ycqtmodelMapper = new ModelMapper();
         Student ycqtstudent = ycqtmodelMapper.map(ycqtDTO, Student.class);
         ycqtstudentServices.insert(ycqtstudent);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long ycqtid) {
         ycqtstudentServices.delete(ycqtid);
     }

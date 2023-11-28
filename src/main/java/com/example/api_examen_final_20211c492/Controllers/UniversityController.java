@@ -5,11 +5,13 @@ import com.example.api_examen_final_20211c492.entities.University;
 import com.example.api_examen_final_20211c492.serviceInterfaces.IStudentServices;
 import com.example.api_examen_final_20211c492.serviceInterfaces.IUniversityServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -24,12 +26,14 @@ public class UniversityController {
         University ycqtuniveristy = ycqtmodelMapper.map(ycqtDTO, University.class);
         ycqtuniversityServices.insert(ycqtuniveristy);
     }
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('USUARIO')")
+
     @GetMapping
     public List<UniversityDTO> list() {
         return ycqtuniversityServices.listAllUniversity().stream().map(ycqtx->{
             ModelMapper ycqtmodelMapper = new ModelMapper();
             return ycqtmodelMapper.map(ycqtx, UniversityDTO.class);
-        }).collect(java.util.stream.Collectors.toList());
+        }).collect(Collectors.toList());
 
     }
 
